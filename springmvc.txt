@@ -1,0 +1,53 @@
+1 .必须要要用的7个jar
+
+2. 一般程序流程jsp - servlet（springMVC）-jsp 
+
+3. springmvc配置文件spring mvc 
+   springMVC常用的命名空间：beans aop context mvc
+   
+4. 普通的servlet 流程
+请求 -url-patten-交给对应的servlet去处理
+如果先在享用springmvc,而不是普通的servlet，如何告知程序？-让springMVC介入程序
+需要配置一个springMVC自带的servlet 名字叫org.springframework.web.servlet.DispatcherServlet("请求")
+
+通过以下方式，把请求交给springMVC去处理：去找注解@RuestMapping映射处理
+之后配置srpingMVC
+配置方式:
+ <servlet>
+  	<servlet-name>springDispatcherServlet</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	
+  	<!-- 指定spring mvc配置文件位置 不指定使用默认情况 -->
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+        <param-value>classpath:springmvc.xml</param-value>
+    </init-param>  
+   
+    <!-- 设置启动顺序 -->  
+    <!-- 启动时以第一个身份启动 -->
+    <load-on-startup>1</load-on-startup>  
+  </servlet>
+  
+  <!-- 匹配映射拦截 -->
+  <servlet-mapping>
+    <servlet-name>springDispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  
+  其中<url-pattern>/</url-pattern>
+  的"/"代表一切请求，不是"/*"
+  "/user":之拦截/user开头的请求
+  "user/abc.do":只拦截该请求
+  ".action":只拦截.action结尾的请求
+  
+  
+5. 把一个普通的类变成一个有特定功能的类
+	方法有：实现接口 ，继承父类 ，注解 ，配置文件
+	spring 把有注解的类放在扫描器当中，在配置文件当中配置方式如下：
+	<context:component-scan base-package="类的全类名"></context:component-scan>
+	之后在配置一个视图解析器（InternalResourceViewResolver）
+	
+6. 报错NoClassDefFoundError：说明缺少jar包
+
+7. 
