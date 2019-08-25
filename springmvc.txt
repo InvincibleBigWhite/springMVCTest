@@ -41,6 +41,15 @@
   "user/abc.do":只拦截该请求
   ".action":只拦截.action结尾的请求
   
+  <!--  --------------------------------------------- -->
+  
+  映射是通过去匹配@RequestMapping("")注解，@RequestMapping("")默认属性是value，可以和方法名类名不一致
+  @RequestMapping("")注解通过method属性去指定请求的方式,常用的有(get ,post ,delete ,put)
+		如：@RequestMapping(value="welcome",method=RequestMethod.POST)//映射
+  <!-- 
+		
+  
+  -->
   
 5. 把一个普通的类变成一个有特定功能的类
 	方法有：实现接口 ，继承父类 ，注解 ，配置文件
