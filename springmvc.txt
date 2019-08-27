@@ -10,7 +10,7 @@
 如果先在享用springmvc,而不是普通的servlet，如何告知程序？-让springMVC介入程序
 需要配置一个springMVC自带的servlet 名字叫org.springframework.web.servlet.DispatcherServlet("请求")
 
-通过以下方式，把请求交给springMVC去处理：去找注解@RuestMapping映射处理
+通过以下方式，把请求交给springMVC去处理：去找注解@RuestMapping映射请求的URL进行处理
 之后配置srpingMVC
 配置方式:
  <servlet>
@@ -44,13 +44,28 @@
   <!--  --------------------------------------------- -->
   
   映射是通过去匹配@RequestMapping("")注解，@RequestMapping("")默认属性是value，可以和方法名类名不一致
-  @RequestMapping("")注解通过method属性去指定请求的方式,常用的有(get ,post ,delete ,put)
+  (1)method：@RequestMapping("")注解中通过method属性去指定请求的方式,常用的有(get ,post ,delete ,put)
 		如：@RequestMapping(value="welcome",method=RequestMethod.POST)//映射
+  (2)params：@RequestMapping("")注解中通过params,约束请求当中的值里面的参数
+		如：@RequestMapping(parmas={"name=zs,age!=3"}),指请求里面里面必有须有name属性并且必须等于zs,并且如果age属性，必须不等于3，也就是说属性是不等于，没有此属性也可以，如果是!age参数，那就不能有此参数，否则报错.
+  (3)headers：@RequestMapping("")注解中通过headers,约束请求头
   <!-- 
 		
   
   -->
   
+  springmvc.xml的配置 :
+  
+  <!-- 配置自定义的扫描器 -->
+	<context:component-scan base-package="org.com.hanler"></context:component-scan>
+	
+	<!-- 配置视图解析器：把handler方法的返回值解析为实际物理视图 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/vive/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	通过(prefix)前缀+returnValue(返回值)+suffix()这样的方式进行解析获得实际的视图URl，然后进行转发.
+	
 5. 把一个普通的类变成一个有特定功能的类
 	方法有：实现接口 ，继承父类 ，注解 ，配置文件
 	spring 把有注解的类放在扫描器当中，在配置文件当中配置方式如下：
@@ -59,4 +74,14 @@
 	
 6. 报错NoClassDefFoundError：说明缺少jar包
 
-7. 
+7. ant风格的请求路径
+	？  代表的是任意单字符
+	*   代表是的任意个字符
+	**  代表任意目录
+	
+	如： @RequestMapping(value="welcome/**/test")
+		请求示例：a href="welcome/sss/bbb/sss/test"
+		
+		
+8 .通过@PathVariable注解获取动态请求参数，基于ant
+	
