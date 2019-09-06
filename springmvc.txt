@@ -184,4 +184,29 @@
 		province:
 		<input type="text" name="addres.province"><br>
 		<input type="submit" value="走你POJO"/>
+<<<<<<< HEAD
 	</form>
+=======
+	</form>
+	
+	
+	
+13. 可以使用Serlvet 原生的API作为目标方法的参数，具体支持以下类型：
+	· HttpServletRequest
+	· HttpServletResponse
+	· HttpSession
+	· java.security.Principal
+	· Locale
+	· InputStream
+	· OutputStream
+	· Reader
+	· Writer
+	代码示例如下：
+	@RequestMapping("testServletAPI")
+	public String testServletAPI(HttpServletRequest request,HttpServletResponse response){
+		System.out.println("request"+request+","+"response:"+response);
+		String id = request.getParameter("id");
+		System.out.println(id);
+		return SUCCES;
+	}
+
