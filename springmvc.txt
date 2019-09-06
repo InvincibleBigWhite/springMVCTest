@@ -142,3 +142,46 @@
 	
 	------------------------------------------------
 	
+10.	@RequestParam 注解来映射请求参数,
+	其中value值即为请求参数的参数名,
+	required 只该参数是否必须，默认为true
+	defaudefaultValue为参数默认值
+	示例代码如下：
+	后台示例代码
+	public String testRequestParam(@RequestParam(value="username",required=false)String username,@RequestParam(value="age",required=false,defaultValue="0") int age){
+		
+		System.out.println("username:"+username);
+		System.out.println("age:"+age);
+		return SUCCES;
+	}
+	前台示例代码：
+	<a href="springmvc/testRequestParam?username=张三&age=22">testRequestParam</a>
+	
+11.	@RequestHeader 注解映射请求头信息，使用较少了解就成
+	用法与@RequestParam注解相同
+	
+12. @CookieValue 注解映射一个Cookie值，用法与@RequestParam注解相同
+
+13. SpringMVC 会按请求参数名和POJO属性名进行自动匹配，自动为该对象填充属性值。支持级联属性。  
+	如：dept.deptId、dept.address.tel 等
+	示例代码如下：
+	后台示例代码：(会自定注入javaBean  User当中)
+	@RequestMapping("testPOJO")
+	public String testPOJO(user user){
+		System.out.println("user"+user);
+		return SUCCES;
+	}
+	前台示例代码：
+	<form action="springmvc/testPOJO" method="post">
+		用户名:
+		<input type="text" name="username"><br>
+		password:
+		<input type="password" name="password"><br>
+		email
+		<input type="text" name="email"><br>
+		age:
+		<input type="text" name="age"><br>
+		province:
+		<input type="text" name="addres.province"><br>
+		<input type="submit" value="走你POJO"/>
+	</form>
