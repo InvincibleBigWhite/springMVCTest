@@ -224,3 +224,59 @@
 		
 		return madelAndView;
 	}
+	
+15. 目标方法可以添加map 类型(实际上也可以是Model类型，或者ModelMap 类型)的参数
+	
+	@RequestMapping("testMap")
+	public String testMap(Map<String, Object> map){
+		
+		map.put("usernames", Arrays.asList("小红","小明"));
+		
+		return SUCCES;
+	}
+	
+16.	@SessionAttributes注解：
+	此注解只能放在类的上面，而不能修饰在方法的上面。
+	@SessionAttributes 除了可以通过属性名指定需要放到会话中的属性外，(实际上使用的是value属性值)
+	还可以通过模型属性的对象类型指定哪些模型属性需要放到会话中(实际上使用的是types属性值)
+	@SessionAttributes(types=User.class) 会将隐含模型中所有类型
+	为 User.class 的属性添加到会话中。
+	@SessionAttributes(value={“user1”, “user2”})
+	@SessionAttributes(types={User.class, Dept.class})
+	@SessionAttributes(value={“user1”, “user2”},  types={Dept.class})
+	示例：
+	@SessionAttributes(value={"user"},types={String.class})
+	
+
+17. @ModelAttribute注解示例如下：
+	/**
+	 * @ModelAttribute()注解，在会每个目标方法执行前被SpringMVC调用
+	 * 
+	 */
+	@ModelAttribute
+	public void getUser(@RequestParam(value="id",required=false) Integer id,Map<String,Object> map){
+		if(id != null){
+			User user = new User(1, "张三", "123456", "sa", "2");
+			System.out.println("从数据库获取对象："+user);
+			map.put("user",user);
+			
+		}
+		
+	}
+	
+	/**
+	 * @ModelAttribute
+	 * 运行过程：
+	 * 1. 执行@ModelAttribute 注解修饰得方法：从数据库取出对象，把对象放到看Map当中，键为：user
+	 * 2. SpringMVC 从Map中取出User对象，并把表单得请求参数赋值给该User 对象对应得属性。
+	 * 3. SpringMVC 把上述对象传入目标方法得参数。
+	 * 
+	 * 注意：在@ModelAttribute 注解修饰得方法当中，放入到Map 时得需要和目标放啊入参类型的第一个字母小写的字符串一致！
+	 * @param user
+	 * @return
+	 */
+	public String testModelAttributes(User user){
+		System.out.println("修改:"+ user);
+		return SUCCES;
+		
+	}
