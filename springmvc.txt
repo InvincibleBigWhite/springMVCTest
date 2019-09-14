@@ -184,6 +184,9 @@
 		province:
 		<input type="text" name="addres.province"><br>
 		<input type="submit" value="走你POJO"/>
+<<<<<<< HEAD
+	</form>
+=======
 	</form>
 	
 	
@@ -206,5 +209,18 @@
 		System.out.println(id);
 		return SUCCES;
 	}
-	
-	
+
+
+14. 目标方法的返回值可以是ModelAndView类型
+	其中可以包含视图和模型信息
+	SpringMVC会把ModelAndView 的 model中的数据放到request 域当中。
+		@RequestMapping("testModelAndView")
+	public ModelAndView testModelAndView(){
+		String viewName = SUCCES;
+		ModelAndView madelAndView = new ModelAndView(viewName);
+		
+		//添加数据模型到madelAndView中
+		madelAndView.addObject("time",new Date());
+		
+		return madelAndView;
+	}
