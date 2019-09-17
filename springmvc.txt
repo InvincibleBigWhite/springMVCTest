@@ -135,7 +135,29 @@
 		
 		隐藏域为当中的：<input type="hidden" name="_method" value="PUT"/>
 		
+		如果@RequestMapping注解中value值一样，还可以根据method（如：method=RequestMethod.GET）值进行匹配
+		后台接收代码如下：
+		@RequestMapping(value="welcome",method=RequestMethod.GET)
+		public String holleWord(){
 		
+			return SUCCES;
+		}
+	
+	
+		@RequestMapping(value="/delete/{id}",method=RequestMethod.PUT)
+		public String Put(@PathVariable("id") Integer id){
+		System.out.println("put:"+id);
+		
+			return SUCCES;
+		}
+	
+		@RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
+		@ResponseBody
+		public String Delete(@PathVariable("id") Integer id){
+			System.out.println("DELTE"+id);
+			
+			return SUCCES;
+		}
 		
 	怎么在springmvc中的目标方法中如何得到ID呢？
 	答：使用@PathVariable 注解
